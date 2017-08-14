@@ -99,21 +99,21 @@ export default class List extends React.Component {
 	constructor(props) {
 		super(props);
 		this.columns = [{
-			title: 'name',
-			dataIndex: 'name',
+			title: 'label',
+			dataIndex: 'label',
 			width: '30%',
 			render: (text, record, index) => (
-				<EditableCell
-          value={text}
-          onChange={this.onCellChange(index, 'name')}
-        />
+				<EditableCell value={text} onChange={this.onCellChange(index, 'name')}/>
 			),
 		}, {
-			title: 'age',
-			dataIndex: 'age',
+			title: 'name',
+			dataIndex: 'name',
 		}, {
-			title: 'address',
-			dataIndex: 'address',
+			title: 'imgSrc',
+			dataIndex: 'imgSrc',
+		}, {
+			title: 'url',
+			dataIndex: 'url',
 		}, {
 			title: 'operation',
 			dataIndex: 'operation',
@@ -146,8 +146,8 @@ export default class List extends React.Component {
 	}
 
 
-	componentDidMount() {
-		let url = `https://api.douban.com/v2/music/search?q=爱&tag=love&start=1&count=1`;
+	componentWillMount() {
+		let url = `../localdb/list.json`;
 		let myHeaders = new Headers({
 			"Content-Type": 'application/jsonp',
 			"Accept": 'application/jsonp',
@@ -155,15 +155,23 @@ export default class List extends React.Component {
 			"Access-Control-Allow-Origin": '*'
 		});
 		fetch(url, {
-			method: 'GET',
-			headers: myHeaders,
-			mode: 'cors'
+			method: 'GET'
 		}).then(function(response) {
 			return response.json();
 		}).then(function(data) {
-			console.log(data);
+			this.setState({
+				dataSource: data.data,
+				count: data.data.length
+			});
+			console.log(this.state.dataSource);
+			// alert(JSON.stringify(this.state.dataSource));
+		}).catch(function(e) {
+			console.log(e.message);
 		})
+
+
 	}
+
 
 	onCellChange(index, key) {
 		return (value) => {
@@ -201,7 +209,10 @@ export default class List extends React.Component {
 		const {
 			dataSource
 		} = this.state;
+		console.log(this.state.dataSource);
+		alert(JSON.stringify(this.state.dataSource));
 		const columns = this.columns;
+		alert(columns);
 		return (
 			<div>
         		<Layout>

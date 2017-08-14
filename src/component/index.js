@@ -22,8 +22,6 @@ const {
 	Content
 } = Layout;
 
-
-
 import Head from './header';
 import Container from './container';
 

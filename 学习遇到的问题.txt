@@ -1,2 +1,32 @@
 1.fetch 使用get方式传参：https://api.douban.com/v2/music/search?q=%E7%88%B1&tag=love&start=1&count=2；
 	使用post方式则在body体内使用json字符串传入；
+
+2.fetch获取本地json文件问题
+标签： reactreact-create-appfetch
+2017-08-09 16:40 93人阅读 评论(0) 收藏 举报
+ 分类： JS（22）   react（4）  
+版权声明：欢迎大家前来取经，独乐乐不如众乐乐
+
+写这个博客主要目的是有必要警醒一下自己，当然如果有其他猿有看到或许也能帮助下您。（也许其它大神在就知道了，恕小弟无知，才刚刚开窍）。
+
+问题很简单：上码（ header.jsx）
+
+[javascript] view plain copy
+fetchSelData = () => {  
+        fetch('../data/selectData.json')  
+            .then((res) => {return res.json(); })  
+            .then((data) => {alert(JSON.stringify(data));this.setState({selV:data.obj});})  
+            .catch((e) => {console.log(e.message); });  
+    }      
+
+上面是我用fetch获取本地的一个json文件，声明代码是没问题的。然后我的本地文件是放在在这个（images／图1）：
+
+印象中“../”一直表示的是上一级，然而这里的上一级不是从header.jsx开始的。一直以为路径是没有问题的。故运行起来。但不幸的是报错了（images／图3）：
+
+
+上面报的是json数据格式的有问题，所以就去看是不是数据的问题，json数据测试来测试去都没问题呀……就这样花费几个小时浪费在json数据上还有fetch版本上，最后不得已找了个远程数据来测试，是可以显示的。那问题就很明显了，报错的原因是找不到路径从而解析数据出错。
+
+经过网上一番好找终于找到答案了。
+
+原因就是这个里的“../”是相对你的首页index.html而言的。所以将json数据放在相对index.html上问题就解决了（images／图2）。
+

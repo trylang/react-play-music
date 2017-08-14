@@ -25,9 +25,6 @@ const {
 	Content
 } = Layout;
 
-console.log(Router);
-console.log(Route);
-
 import Index from './component/index';
 import List from './component/list';
 
