@@ -1,18 +1,47 @@
-// var header = require('./component/header');
-
-import _ from 'lodash';
-// import './css/app.css';
-
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+	BrowserRouter,
+	Router,
+	Route,
+	HashRouter,
+	Match,
+	hashHistory,
+	IndexLink,
+	Link
+} from 'react-router-dom';
+import {
+	Row,
+	Col,
+	Icon,
+	Layout
+} from 'antd';
 
-export default class H1 extends React.Component {
-  render() {
-    return (
-      <h1>ggagagaga</h1>
-    )
-  }
+const {
+	Header,
+	Footer,
+	Sider,
+	Content
+} = Layout;
+
+console.log(Router);
+console.log(Route);
+
+import Index from './component/index';
+import List from './component/list';
+
+export default class App extends React.Component {
+	render() {
+		return (
+			<HashRouter history={hashHistory}>
+			  <div>
+			    <Route exact path="/" component={Index}/>
+			    <Route path="/list" component={List}/>
+			  </div>
+			</HashRouter>
+		)
+	}
 }
 
-ReactDOM.render(<H1/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));

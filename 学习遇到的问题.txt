@@ -1,0 +1,2 @@
+1.fetch 使用get方式传参：https://api.douban.com/v2/music/search?q=%E7%88%B1&tag=love&start=1&count=2；
+	使用post方式则在body体内使用json字符串传入；
