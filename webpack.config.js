@@ -21,6 +21,16 @@ module.exports = {
       //下面是使用ant-design的配置文件
       test: /\.css$/,
       loader: 'style-loader!css-loader'
+    }, {
+      //下面是使用ant-design的配置文件
+      test: /\.scss$/,
+      use: [{
+        loader: "style-loader"
+      }, {
+        loader: "css-loader"
+      }, {
+        loader: "sass-loader"
+      }]
     }]
   },
   output: {
