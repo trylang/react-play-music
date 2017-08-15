@@ -101,16 +101,19 @@ export default class List extends React.Component {
 		this.columns = [{
 			title: 'label',
 			dataIndex: 'label',
-			width: '30%',
-			render: (text, record, index) => (
-				<EditableCell value={text} onChange={this.onCellChange(index, 'name')}/>
-			),
+			// width: '30%',
+			// render: (text, record, index) => (
+			// 	<EditableCell value={text} onChange={this.onCellChange(index, 'name')}/>
+			// ),
 		}, {
 			title: 'name',
 			dataIndex: 'name',
 		}, {
 			title: 'imgSrc',
 			dataIndex: 'imgSrc',
+			render: (text, record, index) => {
+				return <Link to="/"><img src={record.imgSrc} /></Link>
+			}
 		}, {
 			title: 'url',
 			dataIndex: 'url',
@@ -130,23 +133,13 @@ export default class List extends React.Component {
 		}];
 
 		this.state = {
-			dataSource: [{
-				key: '0',
-				name: 'Edward King 0',
-				age: '32',
-				address: 'London, Park Lane no. 0',
-			}, {
-				key: '1',
-				name: 'Edward King 1',
-				age: '32',
-				address: 'London, Park Lane no. 1',
-			}],
-			count: 2,
+			dataSource: [],
+			count: 0,
 		};
 	}
 
 
-	componentWillMount() {
+	componentDidMount() {
 		let url = `../localdb/list.json`;
 		let myHeaders = new Headers({
 			"Content-Type": 'application/jsonp',
@@ -155,19 +148,14 @@ export default class List extends React.Component {
 			"Access-Control-Allow-Origin": '*'
 		});
 		fetch(url, {
-			method: 'GET'
-		}).then(function(response) {
-			return response.json();
-		}).then(function(data) {
-			this.setState({
-				dataSource: data.data,
-				count: data.data.length
+				method: 'GET'
+			})
+			.then((response) => response.json())
+			.then((json) => {
+				this.setState({
+					dataSource: json.data
+				});
 			});
-			console.log(this.state.dataSource);
-			// alert(JSON.stringify(this.state.dataSource));
-		}).catch(function(e) {
-			console.log(e.message);
-		})
 
 
 	}
@@ -209,10 +197,7 @@ export default class List extends React.Component {
 		const {
 			dataSource
 		} = this.state;
-		console.log(this.state.dataSource);
-		alert(JSON.stringify(this.state.dataSource));
 		const columns = this.columns;
-		alert(columns);
 		return (
 			<div>
         		<Layout>

@@ -80,14 +80,14 @@ export default class Contaner extends React.Component {
 			.then((json) => {
 				this.setState({
 					dataItem: json.data[4]
-				})
-			})
+				});
+			});
 
 		$("#player").jPlayer({
 			ready: function(event) {
 				$(this).jPlayer("setMedia", {
 					title: "Scotty",
-					mp3: "http://m10.music.126.net/20170815105712/7d77d26b071b750e3e90d03e8ce31d7a/ymusic/27a0/4b16/7f9a/04eb12d35c0776f26d37d165ab46ef87.mp3",
+					mp3: "http://m10.music.126.net/20170815235237/32fd94fa33c46d26ade7c1c5c784ee89/ymusic/87e7/3b39/cd12/8c93cbe60b0ec1ff9a8052b28a478aea.mp3",
 				}).jPlayer('play');
 			},
 			swfPath: "../../node_modules/jplayer/dist/jplayer", // jquery.jplayer.swf 文件存放的位置
