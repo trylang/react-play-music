@@ -26,6 +26,9 @@ import Head from './header';
 import Container from './container';
 
 export default class Index extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 	render() {
 		return (
 			<div>
@@ -33,7 +36,7 @@ export default class Index extends React.Component {
 					<Header style={{background:"#fff"}}><Head/></Header>
 					<Layout>
 						<Content style={{background:"#eee",paddingTop:"10%",paddingBottom:"5%"}}>
-							<Container/>
+							<Container dataSource1={this.props.musicList} currentItem1={this.props.currentItem}/>
 						</Content>
 					</Layout>
 					<Footer></Footer>

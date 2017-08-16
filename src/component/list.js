@@ -7,6 +7,8 @@ import {
 	Link
 } from 'react-router-dom';
 
+import Pubsub from 'pubsub-js';
+
 import {
 	Row,
 	Col,
@@ -95,16 +97,38 @@ class EditableCell extends React.Component {
 	}
 }
 
+class Cell extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			label: this.props.value
+		}
+	}
+	onState() {
+		if (this.props.onClick) {
+			this.props.onClick(this.state);
+		}
+	}
+	render() {
+		return (
+			<div>
+					<h3 onClick={this.onState.bind(this)}>{this.state.label} </h3>
+				</div>
+		);
+	}
+}
+
 export default class List extends React.Component {
 	constructor(props) {
 		super(props);
 		this.columns = [{
 			title: 'label',
 			dataIndex: 'label',
-			// width: '30%',
-			// render: (text, record, index) => (
-			// 	<EditableCell value={text} onChange={this.onCellChange(index, 'name')}/>
-			// ),
+			width: '12%',
+			render: (text, record, index) => (
+				<Cell value={record.label} onClick={this.cellInfo.bind(this,record)}></Cell>
+				// <EditableCell value={text} onChange={this.onCellChange(index, 'name')}/>
+			),
 		}, {
 			title: 'name',
 			dataIndex: 'name',
@@ -133,33 +157,22 @@ export default class List extends React.Component {
 		}];
 
 		this.state = {
-			dataSource: [],
+			dataSource: this.props.musicList,
 			count: 0,
 		};
 	}
 
 
 	componentDidMount() {
-		let url = `../localdb/list.json`;
-		let myHeaders = new Headers({
-			"Content-Type": 'application/jsonp',
-			"Accept": 'application/jsonp',
-			"Origin": '*',
-			"Access-Control-Allow-Origin": '*'
-		});
-		fetch(url, {
-				method: 'GET'
-			})
-			.then((response) => response.json())
-			.then((json) => {
-				this.setState({
-					dataSource: json.data
-				});
-			});
-
 
 	}
 
+	cellInfo(data) {
+		$('#player').jPlayer('setMedia', {
+			mp3: data.url
+		}).jPlayer('play');
+		Pubsub.publish('SELECT_MUSIC', data);
+	}
 
 	onCellChange(index, key) {
 		return (value) => {
